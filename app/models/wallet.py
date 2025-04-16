@@ -1,0 +1,15 @@
+from sqlalchemy import Column, Integer, String, Float, DateTime, func
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+
+class Wallet(Base):
+    __tablename__ = "wallet"
+
+    id = Column(Integer, primary_key=True, index=True)
+    wallet_address = Column(String, index=True)
+    timestamp = Column(DateTime(timezone=True), default=func.now())
+    trx_balance = Column(Float)
+    bandwidth = Column(Integer)
+    energy = Column(Integer)
