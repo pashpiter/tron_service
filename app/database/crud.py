@@ -26,6 +26,6 @@ async def get_latest_wallet_query(
 
 async def create_wallet_request(
         session: AsyncSession,
-        wallet: WalletQuery
+        wallet_query: WalletQuery
 ) -> WalletQuery:
     pass

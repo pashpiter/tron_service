@@ -5,7 +5,7 @@ Base = declarative_base()
 
 
 class WalletQueryDB(Base):
-    __tablename__ = "wallet"
+    __tablename__ = "wallet_query"
 
     id = Column(Integer, primary_key=True, index=True)
     wallet_address = Column(String, index=True)
