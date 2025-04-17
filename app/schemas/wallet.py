@@ -1,32 +1,29 @@
 from datetime import datetime
 from typing import List
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
-class WalletBase(BaseModel):
+class WalletQueryBase(BaseModel):
     wallet_address: str
     trx_balance: float
     bandwidth: int
     energy: int
 
 
-class Wallet(WalletBase):
+class WalletQuery(WalletQueryBase):
     id: int
     timestamp: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
-class WalletRequest(BaseModel):
+class WalletQueryCreate(BaseModel):
     address: str
 
 
-class WalletResponse(WalletBase):
-    pass
+class WalletQueryRead(WalletQueryBase):
+    id: int
 
 
-class LatestWalletQueryListResponse(BaseModel):
-    items: List[WalletBase]
-    limit: int
-    offset: int
+class LatestWalletQueryList(BaseModel):
+    items: List[WalletQueryBase]

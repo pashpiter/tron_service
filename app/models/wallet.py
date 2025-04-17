@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
-class Wallet(Base):
+class WalletQueryDB(Base):
     __tablename__ = "wallet"
 
     id = Column(Integer, primary_key=True, index=True)
