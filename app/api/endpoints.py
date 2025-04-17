@@ -6,7 +6,7 @@ from schemas.wallet import (WalletResponse, LatestWalletQueryListResponse,
                             WalletRequest)
 
 
-router = APIRouter('/')
+router = APIRouter(prefix='/')
 
 
 @router.get('/', response_model=LatestWalletQueryListResponse)
