@@ -3,29 +3,35 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from models.wallet import WalletQueryDB
-from schemas.wallet import WalletQuery, LatestWalletQueryList
+from schemas.wallet import WalletQueryRead, LatestWalletQueryList, WalletQuery
 
 
 async def get_latest_wallet_query(
         session: AsyncSession,
         offset: int,
         limit: int
-) -> list[WalletQuery]:
+) -> LatestWalletQueryList:
     stmt = (
         select(WalletQueryDB)
         .offset(offset)
         .limit(limit)
         .order_by(WalletQueryDB.id.desc())
     )
-    result: Result = await session.execute(stmt)
+    results: Result = await session.execute(stmt)
     items = [
-        WalletQuery.model_validate(item) for item in result.scalars().all()
+        WalletQueryRead.model_validate(
+            item, from_attributes=True
+        ) for item in results.scalars().all()
     ]
     return LatestWalletQueryList(items=items)
 
 
-async def create_wallet_request(
+async def add_wallet_request(
         session: AsyncSession,
-        wallet_query: WalletQuery
+        wallet_query: dict
 ) -> WalletQuery:
-    pass
+    wallet = WalletQueryDB(**wallet_query)
+    session.add(wallet)
+    await session.commit()
+    await session.refresh(wallet)
+    return wallet
