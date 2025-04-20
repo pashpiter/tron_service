@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict
 
 
 class WalletQueryBase(BaseModel):
-    wallet_address: str
+    address: str
     trx_balance: float
     bandwidth: int
     energy: int
@@ -23,7 +23,8 @@ class WalletQueryCreate(BaseModel):
 
 class WalletQueryRead(WalletQueryBase):
     id: int
+    timestamp: datetime
 
 
 class LatestWalletQueryList(BaseModel):
-    items: List[WalletQueryBase]
+    items: List[WalletQueryRead]
