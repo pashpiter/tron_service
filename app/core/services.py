@@ -1,6 +1,8 @@
 from tronpy import Tron
+from tronpy.exceptions import AddressNotFound
 
 from core.config import settings
+from core.exceptions import InvalidAddress
 
 
 class TronService:
@@ -13,7 +15,12 @@ class TronService:
         '''Проверка что существует такой адрес и получение bandwidth,
         trx_balance, energy по адресу'''
         if not self.client.is_address(address):
-            raise ValueError('Invalid TRON address')
+            raise InvalidAddress('Invalid TRON address')
+        try:
+            account_resources = self.client.get_account_resource(address)
+            trx_balance = float(self.client.get_account_balance(address))
+        except AddressNotFound:
+            raise InvalidAddress('Invalid TRON address')
         account_resources = self.client.get_account_resource(address)
         trx_balance = float(self.client.get_account_balance(address))
         bandwidth = max(
