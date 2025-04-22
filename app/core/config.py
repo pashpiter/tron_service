@@ -7,13 +7,7 @@ class AppSettings(BaseSettings):
 
 
 class TronSettings(BaseSettings):
-    host: str = Field('localhost', alias='TRON_HOST')
-    port: int = Field(8090, alias='TRON_PORT')
     network: str = Field('nile', alias='TRON_NETWORK')
-
-    @property
-    def tron_url(self) -> str:
-        return f'http://{self.host}:{self.port}'
 
 
 class PostgresSettings(BaseSettings):
