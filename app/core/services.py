@@ -16,11 +16,13 @@ class TronService:
         trx_balance, energy по адресу'''
         if not self.client.is_address(address):
             raise InvalidAddress('Invalid TRON address')
+
         try:
             account_resources = self.client.get_account_resource(address)
             trx_balance = float(self.client.get_account_balance(address))
         except AddressNotFound:
             raise InvalidAddress('Invalid TRON address')
+
         account_resources = self.client.get_account_resource(address)
         trx_balance = float(self.client.get_account_balance(address))
         bandwidth = max(
