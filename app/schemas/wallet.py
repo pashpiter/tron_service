@@ -22,9 +22,13 @@ class WalletQueryCreate(BaseModel):
 
 
 class WalletQueryRead(WalletQueryBase):
+    pass
+
+
+class WalletQueryReadWithTime(WalletQueryRead):
     id: int
     timestamp: datetime
 
 
 class LatestWalletQueryList(BaseModel):
-    items: List[WalletQueryRead]
+    items: List[WalletQueryReadWithTime]

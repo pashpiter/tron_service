@@ -3,7 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from models.wallet import WalletQueryDB
-from schemas.wallet import WalletQueryRead, LatestWalletQueryList, WalletQuery
+from schemas.wallet import (WalletQueryReadWithTime, LatestWalletQueryList,
+                            WalletQuery)
 
 
 async def get_latest_wallet_query(
@@ -19,7 +20,7 @@ async def get_latest_wallet_query(
     )
     results: Result = await session.execute(stmt)
     items = [
-        WalletQueryRead.model_validate(
+        WalletQueryReadWithTime.model_validate(
             item, from_attributes=True
         ) for item in results.scalars().all()
     ]
