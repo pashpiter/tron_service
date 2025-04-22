@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List
+
 from pydantic import BaseModel, ConfigDict
 
 
@@ -31,4 +31,4 @@ class WalletQueryReadWithTime(WalletQueryRead):
 
 
 class LatestWalletQueryList(BaseModel):
-    items: List[WalletQueryReadWithTime]
+    items: list[WalletQueryReadWithTime]

@@ -1,5 +1,4 @@
 from database.connection import async_engine
-
 from models.wallet import Base
 
 

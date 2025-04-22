@@ -10,6 +10,7 @@ from .fixtures.wallet import WALLET_ADDRESS
 
 @pytest.mark.asyncio
 async def test_get_latest_query(client: AsyncClient):
+    '''Проверка получения последних записей без таковых в БД'''
     response = await client.get('/')
     assert response.status_code == 200
     data = response.json()
@@ -19,6 +20,7 @@ async def test_get_latest_query(client: AsyncClient):
 
 @pytest.mark.asyncio
 async def test_get_query(client: AsyncClient, wallet_query: WalletQueryDB):
+    '''Проверка получения последних записей'''
     response = await client.get('/')
     assert response.status_code == 200
     data = response.json()
@@ -35,6 +37,7 @@ async def test_get_query(client: AsyncClient, wallet_query: WalletQueryDB):
 
 @pytest.mark.asyncio
 async def test_post_wallet_address(client: AsyncClient):
+    '''Проверка получения информации по address'''
     input_data = {
         'address': WALLET_ADDRESS,
     }
@@ -46,3 +49,17 @@ async def test_post_wallet_address(client: AsyncClient):
     assert 'trx_balance' in data
     assert 'bandwidth' in data
     assert 'energy' in data
+
+
+@pytest.mark.asyncio
+async def test_post_wallet_address_check_db(client: AsyncClient):
+    '''Проверка получения информации по address и добавления записи в БД'''
+    input_data = {
+        'address': WALLET_ADDRESS,
+    }
+    response = await client.post('/', json=input_data)
+    assert response.status_code == 200
+    response = await client.get('/')
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data['items']) == 1

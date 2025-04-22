@@ -1,5 +1,4 @@
 import pytest
-
 from sqlalchemy import select
 from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -11,6 +10,7 @@ from models.wallet import WalletQueryDB
 async def test_get_latest_query(
     session: AsyncSession, wallet_query: WalletQueryDB
 ):
+    '''Проверка добаления новой записи в БД'''
     stmt = select(WalletQueryDB)
     result: Result = await session.execute(stmt)
     wallet = result.scalars().first()

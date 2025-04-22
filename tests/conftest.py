@@ -6,9 +6,9 @@ from sqlalchemy.ext.asyncio import (AsyncSession, async_sessionmaker,
 from sqlalchemy_utils.functions import (create_database, database_exists,
                                         drop_database)
 
+from core.config import settings
 from database.connection import get_session
 from main import app
-from core.config import settings
 from models.wallet import Base
 
 ASYNC_TEST_DB_URL = settings.postgres.postgres_url + '_test'
@@ -17,6 +17,7 @@ SYNC_TEST_DB_URL = ASYNC_TEST_DB_URL.replace('+asyncpg', '')
 
 @pytest.fixture(scope='session')
 def setup_test_db():
+    '''Создание тестовой базы данных'''
     if not database_exists(SYNC_TEST_DB_URL):
         create_database(SYNC_TEST_DB_URL)
     yield

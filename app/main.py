@@ -1,8 +1,9 @@
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
-from core.config import settings
 from api.endpoints import router
+from core.config import settings
 from database.create_table import create_table
 
 

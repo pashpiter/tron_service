@@ -1,10 +1,10 @@
+from sqlalchemy import select
 from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
 
 from models.wallet import WalletQueryDB
-from schemas.wallet import (WalletQueryReadWithTime, LatestWalletQueryList,
-                            WalletQuery)
+from schemas.wallet import (LatestWalletQueryList, WalletQuery,
+                            WalletQueryReadWithTime)
 
 
 async def get_latest_wallet_query(
@@ -12,6 +12,7 @@ async def get_latest_wallet_query(
         offset: int,
         limit: int
 ) -> LatestWalletQueryList:
+    '''Получение последних записей из БД'''
     stmt = (
         select(WalletQueryDB)
         .offset(offset)
@@ -31,6 +32,7 @@ async def add_wallet_request(
         session: AsyncSession,
         wallet_query: dict
 ) -> WalletQuery:
+    '''Добавление новой записи в БД'''
     wallet = WalletQueryDB(**wallet_query)
     session.add(wallet)
     await session.commit()

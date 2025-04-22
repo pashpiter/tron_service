@@ -8,6 +8,7 @@ WALLET_ADDRESS = 'TTzPiwbBedv7E8p4FkyPyeqq4RVoqRL3TW'
 
 @pytest.fixture(scope='function')
 async def wallet_query(session: AsyncSession):
+    '''Фикстура wallet_query'''
     wallet_query = WalletQueryDB(
         address=WALLET_ADDRESS,
         trx_balance=5148.03202,

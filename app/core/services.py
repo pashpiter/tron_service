@@ -10,6 +10,8 @@ class TronService:
     async def get_wallet_info(
             self, address: str
     ) -> dict[str, str | int | float]:
+        '''Проверка что существует такой адрес и получение bandwidth,
+        trx_balance, energy по адресу'''
         if not self.client.is_address(address):
             raise ValueError('Invalid TRON address')
         account_resources = self.client.get_account_resource(address)
